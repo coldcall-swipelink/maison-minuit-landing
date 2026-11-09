@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mentions légales — Maison Minuit</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .legal { max-width: 760px; margin: 0 auto; padding: 120px var(--gutter) 80px; }
+    .legal__back {
+      position: absolute; top: 14px; left: var(--gutter); z-index: 10;
+      display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
+      font-family: var(--f-display); font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; color: var(--champagne);
+    }
+    .legal__back img { width: 40px; height: 40px; border-radius: 50%; mix-blend-mode: screen; }
+    .legal h1 {
+      font-family: var(--f-display); font-size: clamp(1.7rem, 5vw, 2.6rem); letter-spacing: .14em; text-transform: uppercase;
+      color: var(--or-vif); text-align: center; text-wrap: balance;
+    }
+    .legal .ornament { margin-bottom: 56px; }
+    .legal h2 { --ls: .14em; font-size: clamp(1.05rem, 2.6vw, 1.3rem); margin: 48px 0 16px; }
+    .legal p, .legal li { color: var(--texte); }
+    .legal dl { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 10px 24px; margin: 0; }
+    .legal dt { font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; color: var(--or-antique); padding-top: .25em; }
+    .legal dd { margin: 0; color: var(--champagne); overflow-wrap: anywhere; }
+    .legal a { color: var(--or-vif); }
+    .todo { color: #e7a07c; font-style: italic; }
+    @media (max-width: 560px) { .legal dl { grid-template-columns: 1fr; gap: 2px; } .legal dd { margin-bottom: 12px; } }
+  </style>
+</head>
+<body>
+  <a class="legal__back" href="./"><img src="assets/img/logo-monogram.webp" alt="" width="40" height="40"><span>Maison Minuit</span></a>
+
+  <main class="legal">
+    <h1>Mentions légales</h1>
+    <span class="ornament" aria-hidden="true"></span>
+
+    <h2>Éditeur du site</h2>
+    <dl id="editeur"></dl>
+
+    <h2>Hébergement</h2>
+    <p id="hebergeur"></p>
+
+    <h2>Données personnelles</h2>
+    <p>
+      Ce site ne contient aucun formulaire, aucun outil de mesure d’audience et aucun traceur publicitaire&nbsp;:
+      il ne dépose aucun cookie.
+    </p>
+    <p>
+      Lorsque vous nous contactez par e-mail ou par téléphone, les informations que vous nous transmettez
+      (nom, coordonnées, établissement) servent uniquement à répondre à votre demande et ne sont jamais cédées
+      à des tiers. Vous pouvez demander leur consultation, leur rectification ou leur suppression à tout moment
+      en écrivant à <a id="mail-rgpd" href="#"></a>.
+    </p>
+    <p>
+      La carte de la section « Nos bornes installées » est fournie par Google Maps. Elle ne se charge que
+      si vous cliquez sur « Afficher la carte »&nbsp;; Google peut alors déposer ses propres cookies, conformément
+      à sa politique de confidentialité.
+    </p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>
+      Le nom, le logo et les visuels Maison Minuit sont la propriété de l’éditeur du site. Toute reproduction
+      sans autorisation est interdite. Les noms et visuels des parfums présentés appartiennent à leurs maisons
+      respectives et ne sont cités que pour décrire les essences disponibles dans nos bornes.
+    </p>
+
+    <h2>Polices de caractères</h2>
+    <p>Cinzel, Cormorant Garamond et Jost, sous licence SIL Open Font License, hébergées sur ce site.</p>
+
+    <p style="margin-top:56px;text-align:center"><a class="link" href="./">← Retour au site</a></p>
+  </main>
+
+  <script src="assets/js/config.js"></script>
+  <script>
+    (function () {
+      var C = window.MAISON_MINUIT || {}, L = C.legal || {}, ct = C.contact || {};
+      function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+      function val(v) { return v ? esc(v) : '<span class="todo">À compléter</span>'; }
+      var rows = [
+        ["Raison sociale", val(L.raisonSociale)],
+        ["Forme juridique", val(L.formeJuridique)],
+        ["SIRET", val(L.siret)]
+      ];
+      if (L.rcs) rows.push(["RCS", esc(L.rcs)]);
+      if (L.tva) rows.push(["TVA intracommunautaire", esc(L.tva)]);
+      rows.push(["Adresse", val(L.adresse || ct.adresse)]);
+      rows.push(["Directeur de la publication", val(L.directeurPublication)]);
+      if (ct.telephone) rows.push(["Téléphone", esc(ct.telephone)]);
+      if (ct.email) rows.push(["E-mail", '<a href="mailto:' + esc(ct.email) + '">' + esc(ct.email) + "</a>"]);
+      document.getElementById("editeur").innerHTML = rows.map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + r[1] + "</dd>"; }).join("");
+      document.getElementById("hebergeur").innerHTML = val(L.hebergeur);
+      var m = document.getElementById("mail-rgpd");
+      m.textContent = ct.email || ""; m.href = "mailto:" + (ct.email || "");
+    })();
+  </script>
+</body>
+</html>

@@ -56,12 +56,22 @@
   function mapUrl(b) { return "https://www.google.com/maps?q=" + encodeURIComponent(fullAddress(b)) + "&output=embed"; }
   function directionsUrl(b) { return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(fullAddress(b)); }
 
+  var mapAllowed = false, currentBorne = 0;
+  function loadMap() {
+    if (!map || !bornes[currentBorne]) return;
+    map.hidden = false;
+    map.classList.remove("is-loaded");
+    map.src = mapUrl(bornes[currentBorne]);
+  }
+  var mapBtn = $("#bornes-map-load");
+  if (mapBtn) mapBtn.addEventListener("click", function () { mapAllowed = true; mapBtn.textContent = "Chargement…"; loadMap(); });
+
   function selectBorne(i) {
     if (!bornes[i] || !map) return;
-    map.classList.remove("is-loaded");
-    map.src = mapUrl(bornes[i]);
-    var fb = $("#bornes-map-fallback");
-    if (fb) fb.innerHTML = esc(bornes[i].adresse) + "<br>" + esc(bornes[i].ville);
+    currentBorne = i;
+    if (mapAllowed) loadMap();
+    var addr = $("#bornes-map-address");
+    if (addr) addr.innerHTML = esc(bornes[i].adresse) + "<br>" + esc(bornes[i].ville);
     $$(".borne", bList).forEach(function (el, j) {
       el.classList.toggle("is-active", i === j);
       var btn = $(".borne__select", el);

@@ -11,6 +11,29 @@ Ouvrir `index.html` dans un navigateur, ou servir le dossier :
 python3 -m http.server 8000
 ```
 
+## Mise en ligne (Netlify, gratuit)
+
+1. Créer un compte sur https://app.netlify.com/signup → « Sign up with GitHub ».
+2. https://app.netlify.com/start → « Import from Git » → GitHub → `maison-minuit-landing`.
+3. Branche : celle qui contient le site (aujourd'hui `claude/jolly-cori-x1msoj`). Laisser « Build command » vide et « Publish directory » vide ou `.` (tout est déjà réglé dans `netlify.toml`). → « Deploy ».
+4. Le site est en ligne sur une adresse `*.netlify.app`. Chaque modification poussée sur GitHub le met à jour.
+
+### Nom de domaine (≈ 7 à 15 €/an)
+
+1. Acheter le domaine (ex. `maisonminuit.fr`) chez OVH : https://www.ovhcloud.com/fr/domains/
+2. Netlify → votre site → **Domain management** → **Add a domain** → saisir le domaine → choisir **Netlify DNS**. Netlify affiche 4 serveurs DNS (`dns1.p0X.nsone.net`…).
+3. OVH → **Web Cloud** → **Noms de domaine** → votre domaine → onglet **Serveurs DNS** → **Modifier les serveurs DNS** → remplacer par les 4 serveurs Netlify.
+4. Attendre la propagation (de quelques minutes à 24 h). Le HTTPS (cadenas) s'active tout seul.
+
+### Avant d'ouvrir au public
+
+- Remplir le bloc `legal` de `assets/js/config.js` (raison sociale, forme juridique, SIRET, directeur de publication) : la page `mentions-legales.html` affiche « À compléter » tant que c'est vide. Vérifier l'adresse de Netlify (champ `hebergeur`).
+- Une fois le domaine connu : mettre l'adresse complète de l'image de partage dans `index.html` (`og:image`, ex. `https://maisonminuit.fr/assets/img/gamme.webp`).
+
+### Confidentialité
+
+Le site ne dépose aucun cookie : polices hébergées sur le site (`assets/fonts`), aucune mesure d'audience, carte Google Maps chargée uniquement après un clic sur « Afficher la carte ». Pas de bandeau cookies nécessaire.
+
 ## Modifier le contenu
 
 **Tout se modifie dans [`assets/js/config.js`](assets/js/config.js)** :
@@ -49,8 +72,13 @@ Ambiance : marbre noir veiné d'or, colonnes de lumière dorée, volutes de fum�
 
 ```
 index.html
+mentions-legales.html
+404.html
+netlify.toml         réglages d'hébergement (en-têtes, cache)
 assets/
   css/style.css      styles + variables de charte (:root)
+  css/fonts.css      polices hébergées localement
+  fonts/             fichiers de polices (woff2)
   js/config.js       CONTENU MODIFIABLE
   js/main.js         rendu des parfums / bornes / contact, menu, animations
   img/               logo, visuels des flacons, borne

@@ -18,9 +18,8 @@
     document.documentElement.classList.add("js");
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+  <link rel="preload" href="assets/fonts/cinzel-normal-latin-1.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -246,8 +245,13 @@
         <!-- Liste générée depuis assets/js/config.js -->
         <ul class="bornes__list" id="bornes-list"></ul>
         <div class="bornes__map">
-          <p class="bornes__map-fallback" id="bornes-map-fallback">Carte en cours de chargement…</p>
-          <iframe id="bornes-map" title="Carte de la borne sélectionnée" loading="lazy"
+          <!-- La carte Google ne se charge qu'après un clic (aucun cookie tiers sans action) -->
+          <div class="bornes__map-fallback" id="bornes-map-fallback">
+            <p class="bornes__map-address" id="bornes-map-address"></p>
+            <button class="btn btn--line" type="button" id="bornes-map-load">Afficher la carte</button>
+            <small>Carte fournie par Google Maps</small>
+          </div>
+          <iframe id="bornes-map" title="Carte de la borne sélectionnée" hidden
                   referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
@@ -299,7 +303,7 @@
     <span class="ornament" aria-hidden="true"></span>
     <p class="footer__motto">Le luxe à portée de main.</p>
     <button class="btn btn--line" type="button" data-contact>Nous contacter</button>
-    <p class="footer__legal">© <span id="year">2026</span> Maison Minuit. Les marques citées appartiennent à leurs propriétaires respectifs.</p>
+    <p class="footer__legal">© <span id="year">2026</span> Maison Minuit · <a href="mentions-legales.html">Mentions légales</a><br>Les marques citées appartiennent à leurs propriétaires respectifs.</p>
   </footer>
 
   <!-- ============================== FENÊTRE CONTACT ============================== -->

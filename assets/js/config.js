@@ -20,6 +20,21 @@ window.MAISON_MINUIT = {
     instagram: "",            // ex. "https://www.instagram.com/maisonminuit.parfum"
   },
 
+  /* --- Mentions légales (page mentions-legales.html) -----------------
+     Obligatoires en France avant la mise en ligne. Les champs vides
+     s'affichent « À compléter » sur la page.                          */
+  legal: {
+    raisonSociale: "",         // ex. "Maison Minuit SAS" ou vos nom et prénom (micro-entreprise)
+    formeJuridique: "",        // ex. "SAS au capital de 1 000 €" ou "Entrepreneur individuel"
+    siret: "",                 // 14 chiffres
+    rcs: "",                   // ex. "RCS Besançon 123 456 789" (laisser vide si non immatriculé au RCS)
+    tva: "",                   // n° de TVA intracommunautaire (laisser vide si non applicable)
+    adresse: "5 Rue Baudelaire, 25300 Pontarlier",
+    directeurPublication: "",  // nom de la personne responsable du site
+    // Adresse à vérifier sur netlify.com (pied de page / Legal)
+    hebergeur: "Netlify, Inc. — 101 2nd Street, Suite 575, San Francisco, CA 94105, États-Unis — www.netlify.com",
+  },
+
   /* --- Établissements ciblés (section « Pour quels lieux ») -----------
      nom     : titre de la carte
      court   : libellé court, utilisé dans la fenêtre de contact
