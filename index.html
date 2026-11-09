@@ -13,12 +13,26 @@
   <meta property="og:image" content="assets/img/gamme.webp">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
+  <script>
+    /* Active les animations (le contenu reste visible sans JavaScript)
+       et ne rejoue l'ouverture qu'une fois par visite. */
+    (function (d) {
+      d.classList.add("js");
+      try { if (sessionStorage.getItem("mm-intro")) d.classList.add("seen"); sessionStorage.setItem("mm-intro", "1"); } catch (e) {}
+    })(document.documentElement);
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <!-- Ouverture : monogramme qui s'illumine puis s'efface (CSS seul, ne bloque rien) -->
+  <div class="veil" aria-hidden="true">
+    <img src="assets/img/logo-monogram.webp" alt="" width="120" height="120">
+  </div>
+
   <a class="skip" href="#concept">Aller au contenu</a>
 
   <!-- ============================== NAV ============================== -->
@@ -27,20 +41,21 @@
       <img src="assets/img/logo-monogram.webp" alt="" width="40" height="40">
       <span>Maison Minuit</span>
     </a>
-    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
       <span></span><span></span>
     </button>
     <nav id="nav-links" class="nav__links" aria-label="Navigation principale">
       <a href="#concept">Le concept</a>
       <a href="#essences">Nos essences</a>
       <a href="#bornes">Où nous trouver</a>
-      <a href="#contact">Contact</a>
+      <button class="btn btn--line nav__cta" type="button" data-contact>Nous contacter</button>
     </nav>
   </header>
 
   <main id="top">
     <!-- ============================== HERO ============================== -->
-    <section class="hero">
+    <section class="hero" id="hero">
+      <canvas class="dust" aria-hidden="true"></canvas>
       <div class="pillars" aria-hidden="true"></div>
       <div class="smoke smoke--l" aria-hidden="true"></div>
       <div class="smoke smoke--r" aria-hidden="true"></div>
@@ -52,8 +67,8 @@
         </h1>
         <p class="hero__lead">Des parfums d’exception, à essayer en un geste.</p>
         <div class="hero__cta">
-          <a class="btn btn--gold" href="#essences">Découvrir nos essences</a>
-          <a class="btn btn--ghost" href="#bornes">Trouver une borne</a>
+          <a class="btn btn--gold" href="#essences"><span>Découvrir nos essences</span></a>
+          <a class="btn btn--ghost" href="#bornes"><span>Trouver une borne</span></a>
         </div>
       </div>
 
@@ -85,8 +100,8 @@
             <span class="price__label">le spray<br><em>sans engagement</em></span>
           </div>
 
-          <ol class="steps">
-            <li>
+          <ol class="steps" data-stagger>
+            <li class="reveal">
               <span class="steps__icon" aria-hidden="true">
                 <svg viewBox="0 0 48 48"><path d="M19 6h10v6H19zM21 12v4M27 12v4"/><rect x="11" y="16" width="26" height="26" rx="5"/><path d="M17 30h14"/></svg>
               </span>
@@ -94,7 +109,7 @@
               <h3>Choisissez</h3>
               <p>votre parfum sur l’écran tactile</p>
             </li>
-            <li>
+            <li class="reveal">
               <span class="steps__icon" aria-hidden="true">
                 <svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="3"/><path d="M6 19h36M12 29h8"/><circle cx="35" cy="29" r="2"/></svg>
               </span>
@@ -102,7 +117,7 @@
               <h3>Payez <span data-prix>2 €</span></h3>
               <p>par carte bancaire ou en espèces</p>
             </li>
-            <li>
+            <li class="reveal">
               <span class="steps__icon" aria-hidden="true">
                 <svg viewBox="0 0 48 48"><rect x="18" y="20" width="18" height="22" rx="4"/><path d="M23 14h8v6h-8zM23 14h-4M10 12l-3-2M10 17H6M10 22l-3 2"/></svg>
               </span>
@@ -131,8 +146,8 @@
       </header>
 
       <!-- Cartes générées depuis assets/js/config.js -->
-      <ul class="essences__list" id="essences-list" aria-label="Parfums disponibles"></ul>
-      <p class="essences__hint" aria-hidden="true">Faites défiler <span>→</span></p>
+      <ul class="essences__list" id="essences-list" aria-label="Parfums disponibles" data-stagger></ul>
+      <div class="essences__dots" id="essences-dots" aria-hidden="true"></div>
     </section>
 
     <!-- ============================== BORNES ============================== -->
@@ -179,32 +194,16 @@
           </ul>
         </div>
 
-        <form class="contact__form reveal" id="contact-form" novalidate>
-          <div class="field">
-            <label for="cf-name">Nom</label>
-            <input id="cf-name" name="name" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="cf-email">E-mail</label>
-            <input id="cf-email" name="email" type="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="cf-subject">Objet</label>
-            <select id="cf-subject" name="subject">
-              <option>Accueillir une borne</option>
-              <option>Une question sur une essence</option>
-              <option>Autre demande</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" rows="4" required></textarea>
-          </div>
-          <button class="btn btn--gold" type="submit">Envoyer le message</button>
-          <p class="contact__note" id="contact-note" role="status">
-            Votre messagerie s’ouvrira avec le message pré-rempli.
+        <div class="contact__card reveal">
+          <img src="assets/img/logo-monogram.webp" alt="" width="88" height="88" loading="lazy">
+          <h3>Écrivez-nous</h3>
+          <p>
+            Une installation, une question, un partenariat&nbsp;:
+            nous vous répondons personnellement.
           </p>
-        </form>
+          <button class="btn btn--gold btn--lg" type="button" data-contact><span>Nous contacter</span></button>
+          <p class="contact__card-note">Par e-mail ou par téléphone</p>
+        </div>
       </div>
     </section>
   </main>
@@ -216,10 +215,49 @@
     <p class="footer__tag">Parfum · Élégance · Mystère</p>
     <span class="ornament" aria-hidden="true"></span>
     <p class="footer__motto">Le luxe à portée de main.</p>
+    <button class="btn btn--line" type="button" data-contact>Nous contacter</button>
     <p class="footer__legal">© <span id="year">2026</span> Maison Minuit. Les marques citées appartiennent à leurs propriétaires respectifs.</p>
   </footer>
 
-  <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+  <!-- ============================== FENÊTRE CONTACT ============================== -->
+  <dialog class="modal" id="contact-dialog" aria-labelledby="modal-title">
+    <div class="modal__panel">
+      <button class="modal__close" type="button" data-close aria-label="Fermer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+
+      <img class="modal__mono" src="assets/img/logo-monogram.webp" alt="" width="72" height="72">
+      <h2 class="modal__title" id="modal-title">Nous contacter</h2>
+      <p class="modal__lead">Choisissez l’objet de votre message&nbsp;: votre messagerie s’ouvrira avec un e-mail prêt à envoyer.</p>
+
+      <fieldset class="modal__topics">
+        <legend class="sr-only">Objet du message</legend>
+        <label class="chip"><input type="radio" name="topic" id="topic-borne" value="borne" checked><span>Accueillir une borne</span></label>
+        <label class="chip"><input type="radio" name="topic" id="topic-essence" value="essence"><span>Une question sur une essence</span></label>
+        <label class="chip"><input type="radio" name="topic" id="topic-autre" value="autre"><span>Autre demande</span></label>
+      </fieldset>
+
+      <a class="btn btn--gold btn--lg modal__mail" id="modal-mail" href="#">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span>Écrire un e-mail</span>
+      </a>
+
+      <div class="modal__or" aria-hidden="true"><span>ou</span></div>
+
+      <div class="modal__alt">
+        <a class="modal__option" id="modal-tel" href="#">
+          <small>Appeler</small>
+          <span id="modal-tel-label"></span>
+        </a>
+        <div class="modal__option modal__option--copy">
+          <small>Adresse e-mail</small>
+          <span class="modal__email" id="modal-email"></span>
+          <button class="link modal__copy" type="button" id="modal-copy">Copier</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <script src="assets/js/config.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
