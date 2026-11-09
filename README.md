@@ -11,11 +11,18 @@ Ouvrir `index.html` dans un navigateur, ou servir le dossier :
 python3 -m http.server 8000
 ```
 
-## Mise en ligne (Netlify, gratuit)
+## Mise en ligne sans GitHub (Netlify Drop, gratuit)
+
+1. Dézipper `maison-minuit-site.zip` (ou utiliser ce dossier sans `.git`, `README.md`).
+2. Ouvrir https://app.netlify.com/drop et glisser-déposer le dossier du site.
+3. Créer le compte Netlify pour garder le site en ligne.
+4. Pour une mise à jour : Netlify → votre site → **Deploys** → glisser-déposer le nouveau dossier.
+
+## Mise en ligne avec GitHub (Netlify, gratuit)
 
 1. Créer un compte sur https://app.netlify.com/signup → « Sign up with GitHub ».
 2. https://app.netlify.com/start → « Import from Git » → GitHub → `maison-minuit-landing`.
-3. Branche : celle qui contient le site (aujourd'hui `claude/jolly-cori-x1msoj`). Laisser « Build command » vide et « Publish directory » vide ou `.` (tout est déjà réglé dans `netlify.toml`). → « Deploy ».
+3. Branche : celle qui contient le site (aujourd'hui `claude/jolly-cori-x1msoj`). Laisser « Build command » vide et « Publish directory » vide ou `.` (les réglages sont dans `_headers` et `_redirects`). → « Deploy ».
 4. Le site est en ligne sur une adresse `*.netlify.app`. Chaque modification poussée sur GitHub le met à jour.
 
 ### Nom de domaine (≈ 7 à 15 €/an)
@@ -74,7 +81,7 @@ Ambiance : marbre noir veiné d'or, colonnes de lumière dorée, volutes de fum�
 index.html
 mentions-legales.html
 404.html
-netlify.toml         réglages d'hébergement (en-têtes, cache)
+_headers, _redirects réglages d'hébergement Netlify (en-têtes, cache, adresses)
 assets/
   css/style.css      styles + variables de charte (:root)
   css/fonts.css      polices hébergées localement
