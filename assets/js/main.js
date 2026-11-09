@@ -97,27 +97,43 @@
   /* ---------- Coordonnées ---------- */
   var ct = C.contact || {};
 
-  /* E-mail pré-rempli selon l'objet choisi */
-  var TOPICS = {
-    borne: {
-      sujet: "Accueillir une borne Maison Minuit",
-      corps: "Bonjour,\n\nJe souhaiterais accueillir une borne Maison Minuit dans mon établissement.\n\nÉtablissement : \nVille : \nTéléphone : \n\nBien cordialement,\n"
-    },
-    essence: {
-      sujet: "Question sur une essence",
-      corps: "Bonjour,\n\nJ’ai une question au sujet de vos essences :\n\n\nBien cordialement,\n"
-    },
-    autre: {
-      sujet: "Demande de contact",
-      corps: "Bonjour,\n\n\n\nBien cordialement,\n"
-    }
+  /* ---------- Établissements ciblés ---------- */
+  var LIEUX = Array.isArray(C.lieux) ? C.lieux : [];
+  var VENUE_ICONS = {
+    club: '<path d="M12 2v3"/><circle cx="12" cy="12" r="7"/><path d="M5 12h14M12 5c2.6 2 2.6 12 0 14M12 5c-2.6 2-2.6 12 0 14M6.6 8.5h10.8M6.6 15.5h10.8"/>',
+    bar: '<path d="M4 4h16l-8 9z"/><path d="M12 13v7M8 20h8M15 4l3-2"/>',
+    restaurant: '<path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 11V9M10 9h4"/>',
+    hotel: '<path d="M3 19V6M3 15h18v4M21 15v-2.5A3.5 3.5 0 0 0 17.5 9H11v6"/><circle cx="7" cy="12" r="1.8"/>',
+    airbnb: '<circle cx="8" cy="12" r="4.2"/><path d="M12.2 12H21M18 12v3M21 12v2.2"/>',
+    casino: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
+    evenement: '<path d="M6 3h4l-.4 6a1.6 1.6 0 0 1-3.2 0zM8 10.6V19M5.5 19h5M14 3h4l-.4 6a1.6 1.6 0 0 1-3.2 0zM16 10.6V19M13.5 19h5"/>',
+    boutique: '<path d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"/>'
   };
+  var lieuxList = $("#lieux-list");
+  if (lieuxList) {
+    lieuxList.innerHTML = LIEUX.map(function (l, i) {
+      return (
+        '<li class="lieu reveal">' +
+          '<button type="button" class="lieu__btn" data-contact data-lieu="' + i + '">' +
+            '<span class="lieu__icon" aria-hidden="true"><svg viewBox="0 0 24 24">' + (VENUE_ICONS[l.icone] || VENUE_ICONS.boutique) + "</svg></span>" +
+            '<span class="lieu__name">' + esc(l.nom) + "</span>" +
+            '<span class="lieu__text">' + esc(l.accroche) + "</span>" +
+            '<span class="lieu__cta">Demander une borne <span aria-hidden="true">→</span></span>' +
+          "</button>" +
+        "</li>"
+      );
+    }).join("");
+  }
 
-  function mailtoFor(key) {
-    var t = TOPICS[key] || TOPICS.autre;
-    return "mailto:" + (ct.email || "") +
-      "?subject=" + encodeURIComponent("Maison Minuit — " + t.sujet) +
-      "&body=" + encodeURIComponent(t.corps);
+  /* E-mail pré-rempli selon le type d'établissement choisi */
+  function mailtoFor(lieu) {
+    var type = lieu ? lieu.court : "";
+    var sujet = "Installer une borne Maison Minuit" + (type ? " — " + type : "");
+    var corps =
+      "Bonjour,\n\nJe souhaiterais installer une borne Maison Minuit dans mon établissement.\n\n" +
+      "Type de lieu : " + type + "\nNom de l’établissement : \nVille : \nTéléphone : \n\n" +
+      "Bien cordialement,\n";
+    return "mailto:" + (ct.email || "") + "?subject=" + encodeURIComponent(sujet) + "&body=" + encodeURIComponent(corps);
   }
 
   var telHref = ct.telephone ? "tel:" + ct.telephone.replace(/[^\d+]/g, "") : "";
@@ -131,7 +147,7 @@
     };
     var rows = [];
     if (ct.telephone) rows.push([icons.tel, "Téléphone", '<a href="' + esc(telHref) + '">' + esc(ct.telephone) + "</a>"]);
-    if (ct.email) rows.push([icons.mail, "E-mail", '<a href="' + esc(mailtoFor("borne")) + '">' + esc(ct.email) + "</a>"]);
+    if (ct.email) rows.push([icons.mail, "E-mail", '<a href="' + esc(mailtoFor(null)) + '">' + esc(ct.email) + "</a>"]);
     if (ct.adresse) rows.push([icons.pin, "Adresse", esc(ct.adresse)]);
     if (ct.instagram) rows.push([icons.ig, "Instagram", '<a href="' + esc(ct.instagram) + '" target="_blank" rel="noopener">' + esc(ct.instagram.replace(/^https?:\/\/(www\.)?instagram\.com\//, "@").replace(/\/$/, "")) + "</a>"]);
     cList.innerHTML = rows.map(function (r) {
@@ -146,11 +162,17 @@
   var mailBtn = $("#modal-mail");
   var lastFocus = null;
 
-  function currentTopic() {
-    var r = $('input[name="topic"]:checked', dlg);
-    return r ? r.value : "borne";
+  var topics = $("#modal-topics");
+  if (topics) {
+    topics.insertAdjacentHTML("beforeend", LIEUX.map(function (l, i) {
+      return '<label class="chip"><input type="radio" name="lieu" id="lieu-' + i + '" value="' + i + '"><span>' + esc(l.court || l.nom) + "</span></label>";
+    }).join("") + '<label class="chip"><input type="radio" name="lieu" id="lieu-autre" value=""><span>Autre lieu</span></label>');
   }
-  function refreshMail() { if (mailBtn) mailBtn.href = mailtoFor(currentTopic()); }
+  function currentLieu() {
+    var r = $('input[name="lieu"]:checked', dlg);
+    return r && r.value !== "" ? LIEUX[Number(r.value)] : null;
+  }
+  function refreshMail() { if (mailBtn) mailBtn.href = mailtoFor(currentLieu()); }
 
   if (dlg) {
     $("#modal-email").textContent = ct.email || "";
@@ -158,7 +180,7 @@
     if (ct.telephone) { telLink.href = telHref; $("#modal-tel-label").textContent = ct.telephone; }
     else telLink.hidden = true;
     refreshMail();
-    $$('input[name="topic"]', dlg).forEach(function (r) { r.addEventListener("change", refreshMail); });
+    $$('input[name="lieu"]', dlg).forEach(function (r) { r.addEventListener("change", refreshMail); });
 
     // Copier l'adresse e-mail (secours si aucune messagerie n'est configurée)
     var copyBtn = $("#modal-copy");
@@ -180,19 +202,22 @@
     });
   }
 
-  function openContact() {
+  function openContact(e) {
+    var idx = e && e.currentTarget ? e.currentTarget.getAttribute("data-lieu") : null;
     closeMenu();
     if (!dlg || typeof dlg.showModal !== "function") {   // très vieux navigateur : messagerie directe
-      window.location.href = mailtoFor("borne");
+      window.location.href = mailtoFor(idx != null ? LIEUX[Number(idx)] : null);
       return;
     }
     lastFocus = document.activeElement;
+    // présélectionne le lieu cliqué ; sinon aucun choix imposé
+    $$('input[name="lieu"]', dlg).forEach(function (r) { r.checked = idx != null && r.value === idx; });
     refreshMail();
     dlg.classList.remove("is-closing");
     dlg.showModal();
     document.body.classList.add("is-locked");
-    var checked = $('input[name="topic"]:checked', dlg);
-    if (checked) checked.focus();
+    var first = $('input[name="lieu"]:checked', dlg) || $('input[name="lieu"]', dlg);
+    if (first) first.focus();
   }
   function closeContact() {
     if (!dlg || !dlg.open || dlg.classList.contains("is-closing")) return;

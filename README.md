@@ -1,6 +1,7 @@
 # Maison Minuit — Landing page
 
 Site vitrine statique (HTML / CSS / JS, sans build) pour les bornes de parfums Maison Minuit.
+Cible : les établissements qui accueillent une borne (clubs, bars, restaurants, hôtels, Airbnb, casinos, événements, boutiques).
 
 ## Aperçu local
 
@@ -18,6 +19,7 @@ python3 -m http.server 8000
 | --- | --- |
 | Prix de l'essai | `prix` |
 | Téléphone, e-mail, adresse, Instagram | `contact` |
+| Types d'établissements (section « Pour quels lieux » et choix dans la fenêtre de contact) | `lieux` — un bloc `{ … }` par type |
 | Parfums (nom, maison, famille, notes, visuel) | `parfums` — un bloc `{ … }` par parfum |
 | Bornes / points de vente | `bornes` — un bloc `{ … }` par borne |
 
@@ -54,6 +56,6 @@ assets/
   img/               logo, visuels des flacons, borne
 ```
 
-Le formulaire de contact ouvre la messagerie du visiteur avec le message pré-rempli (aucun serveur nécessaire). Pour un envoi direct, brancher un service type Formspree sur `#contact-form`.
+Le bouton « Nous contacter » ouvre une fenêtre : le visiteur choisit son type d'établissement, puis « Écrire un e-mail » ouvre sa messagerie avec l'objet et le message pré-remplis (aucun serveur nécessaire). Le texte de l'e-mail se modifie dans `mailtoFor()` (`assets/js/main.js`).
 
 Avant mise en ligne : remplacer `og:image` dans `index.html` par une URL absolue (ex. `https://votre-domaine.fr/assets/img/gamme.webp`).

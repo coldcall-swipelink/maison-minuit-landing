@@ -20,6 +20,31 @@ window.MAISON_MINUIT = {
     instagram: "",            // ex. "https://www.instagram.com/maisonminuit.parfum"
   },
 
+  /* --- Établissements ciblés (section « Pour quels lieux ») -----------
+     nom     : titre de la carte
+     court   : libellé court, utilisé dans la fenêtre de contact
+     accroche: une phrase sur l'usage de la borne dans ce lieu
+     icone   : club, bar, restaurant, hotel, airbnb, casino, evenement, boutique
+     Ajouter / retirer un lieu = ajouter / retirer un bloc { ... }.       */
+  lieux: [
+    { nom: "Clubs & boîtes de nuit", court: "Club",        icone: "club",
+      accroche: "Un sillage impeccable avant de retourner sur la piste." },
+    { nom: "Bars & lounges",         court: "Bar & lounge", icone: "bar",
+      accroche: "Le petit luxe qui prolonge la soirée." },
+    { nom: "Restaurants",            court: "Restaurant",  icone: "restaurant",
+      accroche: "Une attention raffinée offerte à vos convives." },
+    { nom: "Hôtels & spas",          court: "Hôtel & spa", icone: "hotel",
+      accroche: "Dans le hall ou près du spa, une signature olfactive." },
+    { nom: "Airbnb & conciergeries", court: "Airbnb",      icone: "airbnb",
+      accroche: "Un détail de standing que vos voyageurs retiennent." },
+    { nom: "Casinos & salons VIP",   court: "Casino",      icone: "casino",
+      accroche: "Une expérience à la hauteur de vos hôtes." },
+    { nom: "Événements & mariages",  court: "Événement",   icone: "evenement",
+      accroche: "Un moment dont vos invités se souviendront." },
+    { nom: "Boutiques & centres commerciaux", court: "Boutique", icone: "boutique",
+      accroche: "Faites découvrir la haute parfumerie à vos visiteurs." },
+  ],
+
   /* --- Nos essences ----------------------------------------------------
      image   : chemin vers le visuel (ratio conseillé 336 × 410, portrait)
      famille : 3 mots, affichés séparés par « · »
