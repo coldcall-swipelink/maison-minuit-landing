@@ -110,7 +110,7 @@ h2 {
   font-family: var(--f-display);
   font-size: clamp(1.7rem, 4.2vw, 3rem);
   letter-spacing: .14em; line-height: 1.2;
-  text-transform: uppercase;
+  text-transform: uppercase; text-wrap: balance;
   color: var(--or);
   background: linear-gradient(180deg, var(--or-lumiere) 0%, var(--or) 55%, var(--or-antique) 100%);
   -webkit-background-clip: text; background-clip: text;
@@ -173,11 +173,11 @@ h2 {
   appearance: none; background: none; border: 0; padding: 0; cursor: pointer;
   font: inherit; font-size: .74rem; letter-spacing: .26em; text-transform: uppercase;
   color: var(--or-vif); text-decoration: none;
-  border-bottom: 1px solid var(--ligne);
-  padding-bottom: 3px;
+  display: inline-flex; align-items: center; gap: .4em; min-height: 44px;
+  background: linear-gradient(var(--ligne), var(--ligne)) left calc(50% + .95em) / 100% 1px no-repeat;
   transition: border-color .4s, color .4s;
 }
-.link:hover { color: var(--or-lumiere); border-color: var(--or-vif); }
+.link:hover { color: var(--or-lumiere); background-image: linear-gradient(var(--or-vif), var(--or-vif)); }
 
 /* ---------- Navigation ---------- */
 .nav {
@@ -204,13 +204,13 @@ h2 {
 .nav__brand img { width: 40px; height: 40px; border-radius: 50%; mix-blend-mode: screen; }
 .nav__links { display: flex; gap: clamp(18px, 3vw, 40px); }
 .nav__links a {
-  position: relative; text-decoration: none;
+  position: relative; text-decoration: none; padding: 12px 0;
   font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
   color: var(--texte);
   transition: color .4s;
 }
 .nav__links a::after {
-  content: ""; position: absolute; left: 0; right: .3em; bottom: -6px; height: 1px;
+  content: ""; position: absolute; left: 0; right: .3em; bottom: 6px; height: 1px;
   background: var(--or); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease);
 }
 .nav__links a:hover { color: var(--or-lumiere); }
@@ -255,7 +255,8 @@ h2 {
 /* pas de z-index ici : le logo doit se fondre (mix-blend) dans le fond du hero */
 .hero__inner { position: relative; text-align: center; }
 .hero__logo img {
-  width: min(400px, 78vw); height: auto; margin: 0 auto;
+  width: min(400px, 78vw, 40vh); height: auto; margin: 0 auto;
+  width: min(400px, 78vw, 40svh);
   mix-blend-mode: screen;
   /* fond de l'image fondu dans le noir de la page */
   -webkit-mask-image: radial-gradient(ellipse 68% 66% at 50% 48%, #000 62%, transparent 100%);
@@ -264,7 +265,8 @@ h2 {
   animation: logoIn 2.4s var(--ease) both;
 }
 .hero__lead {
-  margin: clamp(8px, 2vh, 20px) 0 34px;
+  margin: clamp(4px, 1.6vh, 20px) 0 clamp(20px, 4vh, 34px);
+  text-wrap: balance;
   font-family: var(--f-serif); font-style: italic;
   font-size: clamp(1.15rem, 2.4vw, 1.45rem);
   color: var(--champagne);
@@ -276,11 +278,11 @@ h2 {
 }
 .hero__scroll {
   position: absolute; left: 50%; bottom: 26px; z-index: 2;
-  width: 1px; height: 54px; transform: translateX(-50%);
-  background: linear-gradient(var(--ligne), transparent);
+  width: 44px; height: 54px; transform: translateX(-50%);
+  background: linear-gradient(var(--ligne), transparent) center / 1px 100% no-repeat;
 }
 .hero__scroll span {
-  position: absolute; left: -2px; top: 0; width: 5px; height: 5px; border-radius: 50%;
+  position: absolute; left: 19.5px; top: 0; width: 5px; height: 5px; border-radius: 50%;
   background: var(--or-vif); box-shadow: 0 0 10px var(--or-vif);
   animation: drip 2.6s var(--ease) infinite;
 }
@@ -412,6 +414,7 @@ h2 {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   box-shadow: inset 0 0 0 1px rgba(248, 216, 152, .05);
 }
+@media (hover: hover) {
 .essence:hover {
   border-color: var(--ligne-forte);
   box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--teinte) 60%, transparent), 0 0 40px -10px rgba(240, 192, 112, .2);
@@ -424,6 +427,7 @@ h2 {
   transition: transform 1.4s var(--ease);
 }
 .essence:hover .essence__visual img { transform: scale(1.04); }
+}
 .essence__body { padding: 0 24px 30px; margin-top: -26px; position: relative; text-align: center; }
 .essence h3 {
   font-family: var(--f-display); font-size: 1.32rem; letter-spacing: .2em; text-transform: uppercase;
@@ -463,7 +467,7 @@ h2 {
     scrollbar-width: none;
   }
   .essences__list::-webkit-scrollbar { display: none; }
-  .essence { flex: 0 0 82%; scroll-snap-align: start; }
+  .essence { flex: 0 0 min(82%, 340px); scroll-snap-align: start; }
   .essence.reveal { opacity: 1; transform: none; }
   .essences__hint {
     display: block; margin: 8px 0 0; text-align: center;
@@ -538,8 +542,8 @@ h2 {
 }
 .contact__list a, .contact__list span > :not(small) { word-break: break-word; }
 .contact__list li > span:last-child { color: var(--champagne); font-size: 1.05rem; }
-.contact__list a { text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .4s, color .4s; }
-.contact__list a:hover { color: var(--or-lumiere); border-color: var(--or); }
+.contact__list a { display: inline-block; padding: 10px 0; margin: -10px 0; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .4s, color .4s; }
+.contact__list a:hover { color: var(--or-lumiere); }
 
 .contact__form {
   padding: clamp(26px, 4vw, 44px);
@@ -594,6 +598,65 @@ h2 {
 .essence.reveal:nth-child(3) { transition-delay: .2s; }
 .essence.reveal:nth-child(4) { transition-delay: .3s; }
 .essence.reveal:nth-child(5) { transition-delay: .4s; }
+
+/* =====================================================================
+   AJUSTEMENTS RESPONSIVE
+   ===================================================================== */
+.lead, .heading__sub, .essence__family, .borne--soon p { text-wrap: balance; }
+/* taille minimale des petits libellés en capitales (≈ 11,2 px) */
+.borne__lieu, .contact__list small, .field label, .footer__tag,
+.concept__visual figcaption, .essences__hint, .essence__notes dt, .steps__n { font-size: .7rem; }
+
+/* Téléphones */
+@media (max-width: 560px) {
+  /* lisibilité : aucun libellé sous ~11,5 px */
+  .eyebrow, .heading__sub, .steps__n, .essence__house, .essence__family,
+  .borne__lieu, .contact__list small, .field label, .footer__tag,
+  .concept__visual figcaption, .essences__hint, .essence__notes dt { font-size: .72rem; }
+  .eyebrow { letter-spacing: .34em; }
+  .heading__sub, .footer__tag { letter-spacing: .22em; }
+  .footer__motto { letter-spacing: .24em; }
+  .essence__family { letter-spacing: .18em; }
+  .essence__family i { margin: 0 .35em; }
+  h2 { letter-spacing: .1em; }
+
+  /* boutons pleine largeur, même taille, sur une ligne */
+  .hero__cta { flex-direction: column; align-items: stretch; width: min(320px, 100%); margin: 0 auto; gap: 12px; }
+  .btn { padding: 0 1.2em; letter-spacing: .2em; }
+
+  .hero { padding-top: 84px; padding-bottom: 72px; }
+  .price { gap: 16px; margin: 28px 0 36px; }
+  .bornes__map { min-height: 260px; }
+  .borne { padding: 24px 22px; }
+  .contact__list li > span:last-child { font-size: 1rem; min-width: 0; }
+  .contact__list a { overflow-wrap: anywhere; }
+}
+
+/* Très petits écrans (iPhone SE 1re gén., 320 px) */
+@media (max-width: 360px) {
+  .nav__brand span { font-size: .7rem; letter-spacing: .24em; }
+  .price__value { font-size: 2.8rem; }
+  .essence__body { padding-inline: 18px; }
+  .essence__notes { gap: 6px 10px; }
+}
+
+/* Téléphone à l'horizontale / écrans peu hauts : tout le hero tient à l'écran */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero { min-height: 100vh; min-height: 100svh; padding: 64px var(--gutter) 20px; }
+  /* logo à gauche, accroche + boutons à droite */
+  .hero__inner {
+    display: grid; grid-template-columns: auto minmax(0, 340px); align-items: center;
+    column-gap: clamp(24px, 5vw, 56px); text-align: left;
+  }
+  .hero__logo { grid-row: span 2; }
+  .hero__logo img { width: min(220px, 50vh); width: min(220px, 50svh); }
+  .hero__lead { align-self: end; margin: 0 0 16px; }
+  .hero__cta { align-self: start; flex-direction: column; align-items: stretch; width: 100%; margin: 0; gap: 10px; }
+  .btn { --h: 46px; }
+  .hero__scroll { display: none; }
+  .nav.is-open .nav__links { max-height: calc(100vh - 64px); overflow-y: auto; }
+  .nav__links a { padding-block: 12px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
