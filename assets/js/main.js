@@ -426,7 +426,7 @@
         m.phase += 0.01 * dt;
         var x = m.x + Math.sin(m.phase * m.sway) * 12;
         if (m.y < -10) { motes[i] = spawn(false); continue; }
-        var fade = Math.min(1, m.y / (H * 0.25)) * Math.min(1, (H - m.y) / (H * 0.15) + 0.2);
+        var fade = Math.min(1, m.y / (H * 0.25)) * Math.min(1, Math.max(0, (H - m.y) / (H * 0.2)));
         var a = (0.25 + 0.55 * (0.5 + 0.5 * Math.sin(ts / 1000 * m.tw + m.phase))) * fade;
         if (m.r > 1.2) {
           ctx.fillStyle = "rgba(240,192,112," + (a * 0.18).toFixed(3) + ")";
@@ -449,7 +449,35 @@
     }
     document.addEventListener("visibilitychange", function () { setRunning(visible && !document.hidden); });
     setRunning(true);
-    setTimeout(function () { canvas.classList.add("is-on"); }, document.documentElement.classList.contains("seen") ? 100 : 1500);
+    setTimeout(function () { canvas.classList.add("is-on"); }, 3000);
+  }
+
+  /* =================================================================
+     OUVERTURE : verrouille le défilement, permet de passer, puis se retire
+     ================================================================= */
+  var intro = $("#intro");
+  if (intro) {
+    if (reduceMotion) intro.classList.add("is-done");
+    else {
+      document.body.classList.add("is-locked");
+      var finish = function () {
+        if (intro.classList.contains("is-done")) return;
+        intro.classList.add("is-done");
+        if (!(dlg && dlg.open)) document.body.classList.remove("is-locked");
+      };
+      intro.addEventListener("animationend", function (e) { if (e.target === intro) finish(); });
+      setTimeout(finish, 4600);          // filet de sécurité
+      var skip = function () {
+        if (intro.classList.contains("is-skipping") || intro.classList.contains("is-done")) return;
+        document.documentElement.classList.add("intro-skipped");
+        intro.classList.add("is-skipping");
+        setTimeout(finish, 900);
+      };
+      intro.addEventListener("click", skip);
+      window.addEventListener("keydown", function k(e) { if (e.key !== "Tab") { skip(); window.removeEventListener("keydown", k); } });
+      window.addEventListener("wheel", skip, { once: true, passive: true });
+      window.addEventListener("touchmove", skip, { once: true, passive: true });
+    }
   }
 
   var yEl = $("#year");

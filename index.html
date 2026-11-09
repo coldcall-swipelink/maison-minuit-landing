@@ -14,12 +14,8 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
   <script>
-    /* Active les animations (le contenu reste visible sans JavaScript)
-       et ne rejoue l'ouverture qu'une fois par visite. */
-    (function (d) {
-      d.classList.add("js");
-      try { if (sessionStorage.getItem("mm-intro")) d.classList.add("seen"); sessionStorage.setItem("mm-intro", "1"); } catch (e) {}
-    })(document.documentElement);
+    /* Active les animations (le contenu reste visible sans JavaScript). */
+    document.documentElement.classList.add("js");
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,9 +24,29 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <!-- Ouverture : monogramme qui s'illumine puis s'efface (CSS seul, ne bloque rien) -->
-  <div class="veil" aria-hidden="true">
-    <img src="assets/img/logo-monogram.webp" alt="" width="120" height="120">
+  <!-- ============================== OUVERTURE ==============================
+       Anneau d'or tracé, monogramme qui s'illumine, nom lettre à lettre,
+       puis le voile se lève. Tap / clic / touche pour passer. -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__stage">
+      <div class="intro__mark">
+        <svg class="intro__orbit" viewBox="0 0 240 240">
+          <defs>
+            <linearGradient id="intro-gold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f8d898"/>
+              <stop offset=".5" stop-color="#c89850"/>
+              <stop offset="1" stop-color="#f0c070"/>
+            </linearGradient>
+          </defs>
+          <circle class="intro__ring" cx="120" cy="120" r="116" pathLength="1"/>
+          <circle class="intro__spark" cx="120" cy="120" r="116" pathLength="1"/>
+        </svg>
+        <img src="assets/img/logo-monogram-lg.webp" alt="" width="200" height="200">
+      </div>
+      <p class="intro__name"><span style="--i:0">M</span><span style="--i:1">A</span><span style="--i:2">I</span><span style="--i:3">S</span><span style="--i:4">O</span><span style="--i:5">N</span><span class="sp"></span><span style="--i:7">M</span><span style="--i:8">I</span><span style="--i:9">N</span><span style="--i:10">U</span><span style="--i:11">I</span><span style="--i:12">T</span></p>
+      <p class="intro__tag">Parfum · Élégance · Mystère</p>
+      <span class="intro__line"></span>
+    </div>
   </div>
 
   <a class="skip" href="#concept">Aller au contenu</a>
