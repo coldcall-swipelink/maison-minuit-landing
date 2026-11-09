@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maison Minuit — Parfum · Élégance · Mystère</title>
+  <meta name="description" content="Maison Minuit : des bornes de parfums haut de gamme. Choisissez votre essence sur l’écran tactile et essayez-la en spray pour 2 €, sans engagement.">
+  <meta name="theme-color" content="#000000">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Maison Minuit — Parfum · Élégance · Mystère">
+  <meta property="og:description" content="Essayez des parfums d’exception en un geste : 2 € le spray, sans engagement.">
+  <meta property="og:image" content="assets/img/gamme.webp">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#concept">Aller au contenu</a>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top" aria-label="Maison Minuit, retour en haut">
+      <img src="assets/img/logo-monogram.webp" alt="" width="40" height="40">
+      <span>Maison Minuit</span>
+    </a>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
+      <span></span><span></span>
+    </button>
+    <nav id="nav-links" class="nav__links" aria-label="Navigation principale">
+      <a href="#concept">Le concept</a>
+      <a href="#essences">Nos essences</a>
+      <a href="#bornes">Où nous trouver</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ============================== HERO ============================== -->
+    <section class="hero">
+      <div class="pillars" aria-hidden="true"></div>
+      <div class="smoke smoke--l" aria-hidden="true"></div>
+      <div class="smoke smoke--r" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <h1 class="hero__logo">
+          <img src="assets/img/logo-full.webp" width="470" height="660"
+               alt="Maison Minuit — Parfum · Élégance · Mystère">
+        </h1>
+        <p class="hero__lead">Des parfums d’exception, à essayer en un geste.</p>
+        <div class="hero__cta">
+          <a class="btn btn--gold" href="#essences">Découvrir nos essences</a>
+          <a class="btn btn--ghost" href="#bornes">Trouver une borne</a>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#concept" aria-label="Défiler vers le concept"><span></span></a>
+    </section>
+
+    <!-- ============================== CONCEPT ============================== -->
+    <section class="section concept" id="concept">
+      <header class="heading reveal">
+        <p class="eyebrow">Le concept</p>
+        <h2>Le luxe, en un instant</h2>
+        <span class="ornament" aria-hidden="true"></span>
+      </header>
+
+      <div class="concept__grid">
+        <div class="concept__text reveal">
+          <p class="lead">
+            Nos bornes Maison Minuit vous ouvrent les portes de la haute parfumerie&nbsp;:
+            choisissez une essence sur l’écran tactile et laissez-vous envelopper
+            d’une brume délicate.
+          </p>
+          <p>
+            Essayer avant d’acheter, sans engagement et sans flacon à emporter&nbsp;:
+            seulement le plaisir d’un parfum d’exception, le temps d’un moment.
+          </p>
+
+          <div class="price" aria-label="Prix d’un essai">
+            <span class="price__value" data-prix>2 €</span>
+            <span class="price__label">le spray<br><em>sans engagement</em></span>
+          </div>
+
+          <ol class="steps">
+            <li>
+              <span class="steps__icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M19 6h10v6H19zM21 12v4M27 12v4"/><rect x="11" y="16" width="26" height="26" rx="5"/><path d="M17 30h14"/></svg>
+              </span>
+              <span class="steps__n">I</span>
+              <h3>Choisissez</h3>
+              <p>votre parfum sur l’écran tactile</p>
+            </li>
+            <li>
+              <span class="steps__icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="3"/><path d="M6 19h36M12 29h8"/><circle cx="35" cy="29" r="2"/></svg>
+              </span>
+              <span class="steps__n">II</span>
+              <h3>Payez <span data-prix>2 €</span></h3>
+              <p>par carte bancaire ou en espèces</p>
+            </li>
+            <li>
+              <span class="steps__icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><rect x="18" y="20" width="18" height="22" rx="4"/><path d="M23 14h8v6h-8zM23 14h-4M10 12l-3-2M10 17H6M10 22l-3 2"/></svg>
+              </span>
+              <span class="steps__n">III</span>
+              <h3>Vaporisation</h3>
+              <p>instantanée, une expérience unique</p>
+            </li>
+          </ol>
+        </div>
+
+        <figure class="concept__visual reveal">
+          <img src="assets/img/borne.webp" width="960" height="810" loading="lazy"
+               alt="La borne Maison Minuit : vitrine éclairée de cinq flacons, écran tactile et diffuseur doré.">
+          <figcaption>La borne Maison Minuit</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================== ESSENCES ============================== -->
+    <section class="section essences" id="essences">
+      <header class="heading reveal">
+        <p class="eyebrow">Nos essences</p>
+        <h2>Notre sélection d’exception</h2>
+        <p class="heading__sub">Luxe · Élégance · Intensité</p>
+        <span class="ornament" aria-hidden="true"></span>
+      </header>
+
+      <!-- Cartes générées depuis assets/js/config.js -->
+      <ul class="essences__list" id="essences-list" aria-label="Parfums disponibles"></ul>
+      <p class="essences__hint" aria-hidden="true">Faites défiler <span>→</span></p>
+    </section>
+
+    <!-- ============================== BORNES ============================== -->
+    <section class="section bornes" id="bornes">
+      <header class="heading reveal">
+        <p class="eyebrow">Où nous trouver</p>
+        <h2>Nos bornes</h2>
+        <span class="ornament" aria-hidden="true"></span>
+      </header>
+
+      <div class="bornes__grid reveal">
+        <!-- Liste générée depuis assets/js/config.js -->
+        <ul class="bornes__list" id="bornes-list"></ul>
+        <div class="bornes__map">
+          <p class="bornes__map-fallback" id="bornes-map-fallback">Carte en cours de chargement…</p>
+          <iframe id="bornes-map" title="Carte de la borne sélectionnée" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CONTACT ============================== -->
+    <section class="section contact" id="contact">
+      <header class="heading reveal">
+        <p class="eyebrow">Contact</p>
+        <h2>Parlons de votre lieu</h2>
+        <span class="ornament" aria-hidden="true"></span>
+      </header>
+
+      <div class="contact__grid">
+        <div class="contact__intro reveal">
+          <p class="lead">
+            Une question sur nos essences, ou l’envie d’accueillir une borne
+            Maison Minuit dans votre établissement&nbsp;?
+          </p>
+          <p>
+            Centres commerciaux, boutiques, hôtels, restaurants, bars, lounges&nbsp;:
+            offrez à vos clients une expérience olfactive unique, sans aucune
+            contrainte de stock.
+          </p>
+
+          <ul class="contact__list" id="contact-list">
+            <!-- Rempli depuis assets/js/config.js -->
+          </ul>
+        </div>
+
+        <form class="contact__form reveal" id="contact-form" novalidate>
+          <div class="field">
+            <label for="cf-name">Nom</label>
+            <input id="cf-name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="cf-email">E-mail</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="cf-subject">Objet</label>
+            <select id="cf-subject" name="subject">
+              <option>Installer une borne dans mon établissement</option>
+              <option>Question sur une essence</option>
+              <option>Autre demande</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="4" required></textarea>
+          </div>
+          <button class="btn btn--gold" type="submit">Envoyer le message</button>
+          <p class="contact__note" id="contact-note" role="status">
+            Votre messagerie s’ouvrira avec le message pré-rempli.
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <img src="assets/img/logo-monogram.webp" alt="" width="72" height="72" loading="lazy">
+    <p class="footer__name">Maison Minuit</p>
+    <p class="footer__tag">Parfum · Élégance · Mystère</p>
+    <span class="ornament" aria-hidden="true"></span>
+    <p class="footer__motto">Le luxe à portée de main.</p>
+    <p class="footer__legal">© <span id="year">2026</span> Maison Minuit. Les marques citées appartiennent à leurs propriétaires respectifs.</p>
+  </footer>
+
+  <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
